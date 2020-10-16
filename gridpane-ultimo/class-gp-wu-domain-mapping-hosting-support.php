@@ -45,7 +45,19 @@ class GP_WU_Domain_Mapping_Hosting_support extends WU_Domain_Mapping_Hosting_Sup
 			), $data)
 		);
 
+		if (defined('WP_DEBUG') && true === WP_DEBUG) {
+			$this->log("++++++++Send Gridpane API Request+++++++++", false);
+			$this->log($endpoint,false);
+			$this->log($data, false);
+			$this->log($method, false);			
+		 }
+
+		
 		$response = wp_remote_request('https://my.gridpane.com/api/domain/' . $endpoint, $post_fields);
+
+		if (defined('WP_DEBUG') && true === WP_DEBUG) {
+			$this->log($response, false);
+		}
 
 		if (!is_wp_error($response)) {
 			$body = json_decode(wp_remote_retrieve_body($response), true);
@@ -96,6 +108,21 @@ class GP_WU_Domain_Mapping_Hosting_support extends WU_Domain_Mapping_Hosting_Sup
 			'site_url' => WU_GRIDPANE_APP_ID,
 			'domain_url' => $domain
 		));
+	}
+
+	/**
+	 * Prints a message to the debug file that can easily be called by any subclass.
+	 *
+	 * @param mixed $message      an object, array, string, number, or other data to write to the debug log
+	 * @param bool  $shouldNotDie whether or not the The function should exit after writing to the log
+	 *
+	 */
+	protected function log($message, $shouldNotDie = true)
+	{
+		error_log(print_r($message, true));
+		if ($shouldNotDie) {
+			exit;
+		}
 	}
 
 }
