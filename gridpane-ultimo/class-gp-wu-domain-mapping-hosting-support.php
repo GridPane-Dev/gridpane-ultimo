@@ -52,8 +52,12 @@ class GP_WU_Domain_Mapping_Hosting_support extends WU_Domain_Mapping_Hosting_Sup
 			$this->log($method, false);			
 		 }
 
-		
-		$response = wp_remote_request('https://my.gridpane.com/api/domain/' . $endpoint, $post_fields);
+		$gridpane_instance = 'my.gridpane.com';
+		if (defined('GRIDPANE_INSTANCE')) {
+			$gridpane_instance = GRIDPANE_INSTANCE;
+		}
+
+		$response = wp_remote_request('https://' . $gridpane_instance . '/api/application/' . $endpoint, $post_fields);
 
 		if (defined('WP_DEBUG') && true === WP_DEBUG) {
 			$this->log($response, false);
