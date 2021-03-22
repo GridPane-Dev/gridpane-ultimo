@@ -56,6 +56,7 @@ class GP_WU_Domain_Mapping_Hosting_support extends WU_Domain_Mapping_Hosting_Sup
 			$this->log($data, false);
 			$this->log($method, false);
 			$this->log($gridpane_instance, false);
+			$this->log($post_fields, false);
 		}
 
 		$response = wp_remote_request('https://' . $gridpane_instance . '/api/application/' . $endpoint, $post_fields);
