@@ -45,16 +45,17 @@ class GP_WU_Domain_Mapping_Hosting_support extends WU_Domain_Mapping_Hosting_Sup
 			), $data)
 		);
 
+		$gridpane_instance = 'my.gridpane.com';
+		if (defined('WU_GRIDPANE_INSTANCE')) {
+			$gridpane_instance = WU_GRIDPANE_INSTANCE;
+		}
+
 		if (defined('WP_DEBUG') && true === WP_DEBUG) {
 			$this->log("++++++++Send Gridpane API Request+++++++++", false);
-			$this->log($endpoint,false);
+			$this->log($endpoint, false);
 			$this->log($data, false);
-			$this->log($method, false);			
-		 }
-
-		$gridpane_instance = 'my.gridpane.com';
-		if (defined('GRIDPANE_INSTANCE')) {
-			$gridpane_instance = GRIDPANE_INSTANCE;
+			$this->log($method, false);
+			$this->log($gridpane_instance, false);
 		}
 
 		$response = wp_remote_request('https://' . $gridpane_instance . '/api/application/' . $endpoint, $post_fields);
